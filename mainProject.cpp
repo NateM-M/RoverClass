@@ -10,6 +10,7 @@ using namespace std;
 #include "Direction.h"
 #include "Mission.h"
 #include "Rover.h"
+#include <fstream>
 
 // split helper function
 void split(string line, char delimiter, string fields[], int capacity) {
@@ -68,19 +69,34 @@ int main() {
     int WORLD_SIZE = 10;
     Location chargerLocation{0, 0};
     World mars(WORLD_SIZE, chargerLocation);
+    string filename;
+
+    ifstream inFile;
+    inFile.open(filename);
+    if (!inFile.is_open()){
+        cout << "error opening file!" << endl;
+        return 1;
+    }
+
+    
 
     Location startingLocation{0, 0};
     Rover rover(startingLocation, Direction::EAST, 40);
     rover.putOnWorld(mars);
 
-    while (true) {
-        Mission mission = getMission(mars.getMinCoord(), mars.getMaxCoord());
-        if (mission.isQuit()) {
-            break;
-        }
-        rover.executeMission(mission);
-        cout << mission.getStatus();
-        cout << "Rover ended at " << rover.toString() << endl;
-    }
+
+    // while (true) {
+    //     Mission mission = getMission(mars.getMinCoord(), mars.getMaxCoord());
+    //     if (mission.isQuit()) {
+    //         break;
+    //     }
+    //     cout << "Input your mission file name: " << endl;
+    //     cin >> filename;
+    //     ifstream filename;
+    //     if (!filename){
+    //         cout << "Please enter a good file!";
+    //     }
+        
+    // }
     return 0;
 }
